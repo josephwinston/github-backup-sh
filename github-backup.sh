@@ -9,7 +9,7 @@
 set -ex
 
 USER="$1"
-API_URL="https://api.github.com/users/${USER}/repos?type=owner"
+API_URL="https://api.github.com/users/${USER}/repos"
 DATE=$(date +"%Y%m%d")
 TEMP_DIR="github_${USER}_${DATE}"
 BACKUP_FILE="${TEMP_DIR}.tgz"
@@ -18,9 +18,10 @@ BACKUP_FILE="${TEMP_DIR}.tgz"
 # Find out how many pages we have
 #
 
-PAGES=`curl -I "${API_URL}"|grep "Link"|cut -f4 -d' '|cut -f2 -d'&'|cut -f2 -d'='|cut -f1 -d'>'`
+PAGES=`curl -s -I "${API_URL}"|grep "Link:"|cut -f4 -d' '|cut -f2 -d'&'|cut -f2 -d'='|cut -f1 -d'>'`
 
-mkdir "${TEMP_DIR}" && cd "${TEMP_DIR}"
+mkdir "${TEMP_DIR}" 
+cd "${TEMP_DIR}"
 
 count=1
 while [ $count -le ${PAGES} ]
