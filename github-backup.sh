@@ -20,6 +20,15 @@ BACKUP_FILE="${TEMP_DIR}.tgz"
 
 PAGES=`curl -s -I "${API_URL}"|grep "Link:"|cut -f4 -d' '|cut -f2 -d'&'|cut -f2 -d'='|cut -f1 -d'>'`
 
+#
+# Thanks to Claus Niesen <claus@niesens.com> who pointed out the fact
+# that not everyone has more than 30 repos.
+#
+
+if [ -z "${PAGES}"]; then
+     PAGES=0
+fi
+
 mkdir "${TEMP_DIR}" 
 cd "${TEMP_DIR}"
 
