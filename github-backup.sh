@@ -19,6 +19,9 @@ BACKUP_FILE="${TEMP_DIR}.tgz"
 #
 
 PAGES=`curl -s -I "${API_URL}"|grep "Link:"|cut -f4 -d' '|cut -f2 -d'&'|cut -f2 -d'='|cut -f1 -d'>'`
+if [ -z "${PAGES}"]; then
+    PAGES=1
+fi
 
 mkdir "${TEMP_DIR}" 
 cd "${TEMP_DIR}"
