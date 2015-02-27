@@ -29,7 +29,7 @@ cd "${TEMP_DIR}"
 count=1
 while [ $count -le ${PAGES} ]
 do
-    curl -s "${API_URL}?page=${count}" | grep -Eo '"git_url": "[^"]+"' | awk '{print $2}' | xargs -n 1 git clone
+    curl -s "${API_URL}?page=${count}" | grep git_url |cut -d \" -f4 | awk '{print $1}' | xargs -n 1 git clone
     count=`expr ${count} + 1`
 done
 
